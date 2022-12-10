@@ -4,19 +4,19 @@
   <div class="product">
 
     <div class="product-image">
-      <img :src="obj.image" />
+      <img :src="image" />
     </div>
 
     <div class="product-info">
-      <h1>{{ obj.product }}</h1>
-      <p v-if="obj.inStock">In Stock</p>
+      <h1>{{ product }}</h1>
+      <p v-if="inStock">In Stock</p>
       <p v-else>Out of Stock</p>
 
       <ul>
-        <li v-for="detail in obj.details" :key ="detail.id">{{ detail }}</li>
+        <li v-for="detail in details" :key ="detail.id">{{ detail }}</li>
       </ul>
 
-      <div v-for="variant in obj.variants" :key="variant.variantId">
+      <div v-for="variant in variants" :key="variant.variantId">
         <p @mouseover="updateProduct(variant.variantImage)">
           {{ variant.variantColor }}
         </p>
@@ -26,7 +26,7 @@
       <button @click="removeFromCart">Remove from cart</button>
 
       <div class="cart">
-        <p>Cart({{ obj.cart }})</p>
+        <p>Cart({{ cart }})</p>
       </div>
 
     </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 
 export default {
   name: 'App',
@@ -74,7 +74,7 @@ export default {
     }
 
     return {
-      obj,  addToCart, updateProduct, removeFromCart
+      ...toRefs(obj),  addToCart, updateProduct, removeFromCart
     }
   },
  }
