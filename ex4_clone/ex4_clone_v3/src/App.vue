@@ -30,16 +30,17 @@
 
 </template>
 <script>
+import { ref } from "vue"
 
 export default {
   name: 'App',
   setup () {
-    return {
-      product: 'Socks',
-      image: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg',
-      inStock: true,
-      details: ['80% cotton', '20% polyester', 'Gender-neutral'],
-      variants: [
+    const product = ref('Socks')
+    const image = ref('https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg')
+    const inStock = ref(true)
+    const details = ref(['80% cotton', '20% polyester', 'Gender-neutral'])
+    const variants = ref(
+       [
         {
           variantId: 2234,
           variantColor: 'green'
@@ -48,10 +49,16 @@ export default {
           variantId: 2235,
           variantColor: 'blue'
         }
-      ],
+      ])
 
-      sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
-
+    const sizes = ref( ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'])
+    return {
+      product,
+      image,
+      inStock,
+      details,
+      variants,
+      sizes
     }
   }
 }

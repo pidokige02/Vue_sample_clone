@@ -1,9 +1,11 @@
 <script setup>
- const   product = "Socks";
- const   firstName = "KyuSung";
- const   lastName = "Hwang";
- const   message = "This is the sample test message";
- const   description = "A pair of warm, fuzzy socks";
+import { ref } from "vue";
+
+const   product = ref("Socks");
+const   firstName = ref("KyuSung");
+const   lastName = ref("Hwang");
+const   message = ref("This is the sample test message");
+const   description = ref("A pair of warm, fuzzy socks");
 
 </script>
 
@@ -18,30 +20,13 @@
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>

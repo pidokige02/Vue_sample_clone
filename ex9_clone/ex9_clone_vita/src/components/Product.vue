@@ -31,8 +31,6 @@ const variants = ref([
     }
 ])
 
-const onSale = ref(true)
-
 const addToCart = () => {
     emit('add-to-cart', variants.value[selectedVariant.value].variantId)
 }

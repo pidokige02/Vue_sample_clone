@@ -92,8 +92,6 @@ export default {
         }
         ])
 
-        // const cart = ref(0)
-        const onSale = ref(true)
         const reviews = ref([])
 
         const addToCart = () => {

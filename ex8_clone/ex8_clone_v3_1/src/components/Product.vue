@@ -82,7 +82,6 @@ export default {
         ])
 
         const cart = ref(0)
-        const onSale = ref(true)
 
         const addToCart = () => {
             cart.value += 1
@@ -122,7 +121,6 @@ export default {
             details,
             variants,
             cart,
-            onSale,
             addToCart,
             updateProduct,
             removeFromCart,

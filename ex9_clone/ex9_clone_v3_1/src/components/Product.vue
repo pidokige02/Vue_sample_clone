@@ -77,9 +77,6 @@ export default {
         }
         ])
 
-        // const cart = ref(0)
-        const onSale = ref(true)
-
         const addToCart = () => {
             emit('add-to-cart', variants.value[selectedVariant.value].variantId)
         }
@@ -116,7 +113,6 @@ export default {
             selectedVariant,
             details,
             variants,
-            onSale,
             addToCart,
             updateProduct,
             removeFromCart,

@@ -1,0 +1,207 @@
+<template>
+  <div class="product">
+    <div class="product-image">
+      <img :src="image" />
+    </div>
+
+    <div class="product-info">
+      <h1>{{ title }}</h1>
+      <p v-if="inStock">In Stock</p>
+      <p v-else>Out of Stock</p>
+      <p>Shipping: {{ shipping }}</p>
+
+      <product-details :details="details"></product-details>
+
+      <div
+        class="color-box"
+        v-for="(variant, index) in variants"
+        :key="variant.variantId"
+        :style="{ backgroundColor: variant.variantColor }"
+        @mouseover="updateProduct(index)"
+      ></div>
+
+      <button
+        v-on:click="addToCart"
+        :disabled="!inStock"
+        :class="{ disabledButton: !inStock }"
+      >
+        Add to cart
+      </button>
+      <button
+        @click="removeFromCart"
+        :disabled="!inStock"
+        :class="{ disabledButton: !inStock }"
+      >
+        Remove from cart
+      </button>
+    </div>
+  </div>
+  <div>
+    <p v-if="!reviews.length">There are no reviews yet.</p>
+    <ul v-else>
+      <li v-for="(review, index) in reviews" :key="index">
+        <p>{{ review.name }}</p>
+        <p>Rating:{{ review.rating }}</p>
+        <p>{{ review.review }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <product-review @review-submitted="addReview"></product-review>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref, computed } from "vue";
+import ProductDetails from "@/components/ProductDetails.vue";
+import ProductReview from "@/components/ProductReview.vue";
+
+interface ReviewType {
+  name: string;
+  review: string;
+  rating: string;
+  recommend: string;
+}
+
+export default defineComponent({
+  name: "product-data",
+
+  components: {
+    ProductDetails,
+    ProductReview,
+  },
+  props: {
+    premium: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
+  setup(props, { emit }) {
+    const product = ref("Socks");
+    const brand = ref("Vue Mastery");
+    const selectedVariant = ref(0);
+    const details = ref(["80% cotton", "20% polyester", "Gender-neutral"]);
+
+    const variants = ref([
+      {
+        variantId: 2234,
+        variantColor: "green",
+        variantImage:
+          "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg",
+        variantQuantity: 10,
+      },
+      {
+        variantId: 2235,
+        variantColor: "blue",
+        variantImage:
+          "https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg",
+        variantQuantity: 0,
+      },
+    ]);
+
+    const reviews = ref<ReviewType[]>([]);
+
+    const addToCart = () => {
+      emit("add-to-cart", variants.value[selectedVariant.value].variantId);
+    };
+
+    const updateProduct = (index: number) => {
+      selectedVariant.value = index;
+    };
+
+    const removeFromCart = () => {
+      emit("remove-from-cart", variants.value[selectedVariant.value].variantId);
+    };
+
+    const addReview = (productReview: ReviewType) => {
+      reviews.value.push(productReview);
+    };
+
+    const title = computed(() => {
+      return brand.value + " " + product.value;
+    });
+
+    const image = computed(() => {
+      return variants.value[selectedVariant.value].variantImage;
+    });
+
+    const inStock = computed(() => {
+      return variants.value[selectedVariant.value].variantQuantity;
+    });
+
+    const shipping = computed(() => {
+      if (props.premium) {
+        return "Free";
+      } else return 2.99;
+    });
+
+    return {
+      product,
+      brand,
+      selectedVariant,
+      details,
+      variants,
+      reviews,
+      addToCart,
+      updateProduct,
+      removeFromCart,
+      addReview,
+      title,
+      image,
+      inStock,
+      shipping,
+    };
+  },
+});
+</script>
+
+<style scoped>
+body {
+  font-family: tahoma;
+  color: #282828;
+  margin: 0px;
+}
+
+.product {
+  display: flex;
+  flex-flow: wrap;
+  padding: 1rem;
+}
+
+img {
+  border: 1px solid #d8d8d8;
+  width: 70%;
+  margin: 40px;
+  box-shadow: 0px 0.5px 1px #d8d8d8;
+}
+
+.product-image {
+  width: 80%;
+}
+
+.product-image,
+.product-info {
+  margin-top: 10px;
+  width: 50%;
+}
+
+.color-box {
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 30px;
+  border: none;
+  background-color: #1e95ea;
+  color: white;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+}
+
+.disabledButton {
+  background-color: #d8d8d8;
+}
+</style>

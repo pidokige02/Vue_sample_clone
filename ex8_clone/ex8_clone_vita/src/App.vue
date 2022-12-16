@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import Product from './components/Product.vue'
 
-const premium = ref(true)
+const premium = ref(false)
 </script>
 
 <template>

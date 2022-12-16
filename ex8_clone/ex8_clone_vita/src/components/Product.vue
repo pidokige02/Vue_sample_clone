@@ -30,7 +30,6 @@ const variants = ref([
 ])
 
 const cart = ref(0)
-const onSale = ref(true)
 
 const addToCart = () => cart.value += 1
 
